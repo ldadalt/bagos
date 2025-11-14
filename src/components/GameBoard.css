@@ -1,0 +1,156 @@
+.game-board {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.connection-status {
+  margin-top: 10px;
+  padding: 10px 16px;
+  background-color: rgba(255, 221, 119, 0.2);
+  border: 1px solid #ffdd77;
+  border-radius: 8px;
+  color: #ffdd77;
+  font-weight: 500;
+  text-align: center;
+}
+
+.start-screen {
+  margin-top: 50px;
+}
+
+.start-button {
+  padding: 15px 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background-color: #f0c14b;
+  color: #111;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.start-button:hover {
+  background-color: #e0b03a;
+  transform: scale(1.05);
+}
+
+.game-layout {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  max-width: 1400px;
+  margin-top: 20px;
+}
+
+.game-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.game-area {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.game-sidebar {
+  width: 350px;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .game-layout {
+    flex-direction: column;
+  }
+
+  .game-sidebar {
+    width: 100%;
+    min-width: unset;
+  }
+}
+
+.table-area {
+  background-color: #2b612b;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-area h2 {
+  margin-bottom: 15px;
+}
+
+.current-bid {
+  font-size: 1.1em;
+  margin: 10px 0;
+  min-height: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.bid-info {
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #ffdd77;
+  margin-top: 10px;
+}
+
+.round-info {
+  margin-top: 15px;
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+.player-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-over {
+  margin-top: 30px;
+}
+
+.game-loading,
+.game-error {
+  text-align: center;
+  padding: 40px;
+  font-size: 1.2em;
+  margin-top: 50px;
+}
+
+.game-loading {
+  color: #ffdd77;
+}
+
+.game-error {
+  color: #ff6b6b;
+  background-color: rgba(255, 107, 107, 0.1);
+  border: 2px solid #ff6b6b;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 500px;
+}
+

@@ -1,0 +1,32 @@
+.App {
+  text-align: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.App h1 {
+  margin-bottom: 20px;
+  font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.back-to-menu-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  border: 2px solid #ffdd77;
+  color: #ffdd77;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: all 0.3s;
+  z-index: 100;
+}
+
+.back-to-menu-button:hover {
+  background-color: #ffdd77;
+  color: #111;
+}
+

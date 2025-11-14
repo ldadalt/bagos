@@ -1,0 +1,20 @@
+.player-area {
+  background-color: #2b612b;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.player-area.current-player {
+  border: 3px solid #ffdd77;
+  box-shadow: 0 4px 12px rgba(255, 221, 119, 0.5);
+}
+
+.player-area h2 {
+  margin-bottom: 10px;
+  font-size: 1.5em;
+}
+

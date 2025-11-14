@@ -1,0 +1,40 @@
+.dice-container {
+  margin-top: 10px;
+}
+
+.dice-count {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.dice-visible,
+.dice-hidden {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  min-height: 50px;
+}
+
+.die {
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  border-radius: 5px;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.die-hidden {
+  background-color: #444;
+  color: white;
+  border-color: #666;
+}
+

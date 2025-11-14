@@ -1,0 +1,121 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Função helper para verificar se o usuário está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Função helper para verificar se o usuário é jogador do jogo
+    function isPlayerInGame(gameId) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/games/$(gameId)) &&
+        get(/databases/$(database)/documents/games/$(gameId)).data.players.hasAny([request.auth.uid]);
+    }
+
+    // Verifica se usuário é o host
+    function isHost(gameId) {
+      return isAuthenticated() &&
+        exists(/databases/$(database)/documents/games/$(gameId)) &&
+        get(/databases/$(database)/documents/games/$(gameId)).data.hostId == request.auth.uid;
+    }
+
+    // Função helper para verificar se o usuário está criando o jogo
+    function isCreatingGame() {
+      return isAuthenticated() &&
+        request.resource.data.players.hasAny([request.auth.uid]) &&
+        request.resource.data.hostId == request.auth.uid &&
+        request.resource.data.players.size() == 1 &&
+        request.resource.data.players.hasOnly([request.auth.uid]) &&
+        request.resource.data.playerNames.keys().size() == 1 &&
+        request.resource.data.playerNames.keys().hasOnly([request.auth.uid]) &&
+        request.resource.data.status == 'waiting' &&
+        request.resource.data.gameStatus == 'waiting';
+    }
+
+    function isValidStatus(status) {
+      return ['waiting', 'playing', 'finished'].hasAny([status]);
+    }
+
+    function isValidGameUpdate() {
+      return request.resource.data.hostId == resource.data.hostId &&
+        request.resource.data.players == resource.data.players &&
+        request.resource.data.players.size() <= 2 &&
+        request.resource.data.playerNames == resource.data.playerNames &&
+        request.resource.data.createdAt == resource.data.createdAt &&
+        request.resource.data.playerNames.keys().size() <= 2 &&
+        isValidStatus(request.resource.data.status) &&
+        request.resource.data.gameStatus == request.resource.data.status;
+    }
+
+    // Função helper para verificar se pode adicionar jogador
+    function canJoinGame(gameId) {
+      let existingPlayers = resource.data.players;
+      let newPlayers = request.resource.data.players;
+      let existingNames = resource.data.playerNames.keys();
+      let newNames = request.resource.data.playerNames.keys();
+
+      return isAuthenticated() &&
+        resource.data.status == 'waiting' &&
+        request.resource.data.status == 'waiting' &&
+        request.resource.data.gameStatus == 'waiting' &&
+        !existingPlayers.hasAny([request.auth.uid]) &&
+        newPlayers.hasAll(existingPlayers) &&
+        newPlayers.hasAny([request.auth.uid]) &&
+        newPlayers.size() == existingPlayers.size() + 1 &&
+        newPlayers.size() <= 2 &&
+        request.resource.data.hostId == resource.data.hostId &&
+        newNames.hasAll(existingNames) &&
+        newNames.hasAny([request.auth.uid]) &&
+        newNames.size() == existingNames.size() + 1 &&
+        request.resource.data.playerNames[request.auth.uid] != null;
+    }
+
+    // Collection: games
+    match /games/{gameId} {
+      // Permite leitura se:
+      // 1. O usuário é jogador do jogo, OU
+      // 2. O jogo está aguardando jogadores (status 'waiting') - para queries
+      allow read: if isAuthenticated() &&
+        (isPlayerInGame(gameId) ||
+         (resource.data.status == 'waiting'));
+
+      // Permite criar jogo se o usuário está criando e é o host
+      allow create: if isCreatingGame();
+
+      // Permite atualizar se:
+      // 1. O usuário está entrando em uma sala waiting (adicionando-se à lista)
+      // 2. O usuário é jogador do jogo e mantém estrutura/limites do jogo
+      allow update: if canJoinGame(gameId) ||
+        (isPlayerInGame(gameId) && isValidGameUpdate());
+
+      // Subcollection: players (dados privados dos jogadores)
+      match /players/{playerId} {
+        // Permite leitura se é o próprio jogador ou se é jogador do jogo
+        // (para verificar existência do documento)
+        allow read: if isAuthenticated() &&
+          (request.auth.uid == playerId || isPlayerInGame(gameId));
+        
+        // Permite escrita apenas para o próprio jogador
+        allow write: if isAuthenticated() && request.auth.uid == playerId;
+      }
+
+      // Subcollection: history (histórico de apostas e ações)
+      match /history/{historyId} {
+        // Permite leitura/escrita se o usuário é jogador do jogo
+        allow read, write: if isPlayerInGame(gameId);
+      }
+
+      // Subcollection: roundResults (resultados das rodadas)
+      match /roundResults/{roundId} {
+        // Permite leitura se o usuário é jogador do jogo
+        allow read: if isPlayerInGame(gameId);
+        
+        // Cloud Functions escrevem via Admin SDK (não passa por estas regras)
+        // Não permitimos escrita direta do cliente por segurança
+        allow write: if false;
+      }
+    }
+  }
+}
+

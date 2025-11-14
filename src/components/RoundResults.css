@@ -1,0 +1,174 @@
+.round-results {
+  background-color: #2b612b;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.round-results h3 {
+  margin: 0 0 15px 0;
+  font-size: 1.2em;
+  color: #ffdd77;
+  text-align: center;
+}
+
+.rounds-table-container {
+  overflow-x: auto;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.rounds-table-container::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.rounds-table-container::-webkit-scrollbar-track {
+  background: #1a4a1a;
+  border-radius: 3px;
+}
+
+.rounds-table-container::-webkit-scrollbar-thumb {
+  background: #4a8a4a;
+  border-radius: 3px;
+}
+
+.rounds-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85em;
+}
+
+.rounds-table thead {
+  position: sticky;
+  top: 0;
+  background-color: #1a4a1a;
+  z-index: 1;
+}
+
+.rounds-table th {
+  padding: 10px 8px;
+  text-align: left;
+  color: #ffdd77;
+  font-weight: bold;
+  border-bottom: 2px solid #4a8a4a;
+  white-space: nowrap;
+}
+
+.rounds-table td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.rounds-table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.rounds-table tbody tr.current-round {
+  background-color: rgba(255, 221, 119, 0.1);
+  border-left: 3px solid #ffdd77;
+}
+
+.round-number {
+  font-weight: bold;
+  color: #ffdd77;
+  text-align: center;
+}
+
+.round-bids {
+  min-width: 150px;
+}
+
+.bids-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bid-entry {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+}
+
+.bid-player {
+  color: #aaa;
+  font-size: 0.9em;
+}
+
+.bid-value {
+  font-weight: bold;
+  color: #f0c14b;
+}
+
+.no-bids {
+  color: #666;
+  font-style: italic;
+}
+
+.round-challenge {
+  min-width: 120px;
+}
+
+.challenge-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.challenge-detail {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.challenge-result {
+  font-weight: bold;
+  color: #ff6b6b;
+}
+
+.no-challenge {
+  color: #666;
+  font-style: italic;
+}
+
+.round-loser {
+  text-align: center;
+}
+
+.loser-name {
+  color: #ff6b6b;
+  font-weight: bold;
+}
+
+.no-loser {
+  color: #666;
+  font-style: italic;
+}
+
+.round-dice-counts {
+  min-width: 120px;
+}
+
+.dice-counts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dice-count {
+  font-size: 0.9em;
+}
+
+.dice-count strong {
+  color: #ffdd77;
+  font-size: 1.1em;
+}
+
+.rounds-empty {
+  text-align: center;
+  color: #aaa;
+  padding: 20px;
+  font-style: italic;
+}
+
