@@ -1,2 +1,5 @@
-functions
+functions/
+dist/
+node_modules/
+.firebase/
 
